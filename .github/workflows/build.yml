@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  simple:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet build
+        working-directory: simple/app
+
+  globaljson:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: globaljson/global.json
+      - run: dotnet build
+        working-directory: globaljson/tests
+
+  globaljson-and-nugetconfig:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: globaljson-and-nugetconfig/global.json
+      - run: dotnet build
+        working-directory: globaljson-and-nugetconfig/tests
+
+  globaljson-and-nugetconfig-clear:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: globaljson-and-nugetconfig-clear/global.json
+      - run: dotnet build
+        working-directory: globaljson-and-nugetconfig-clear/tests
