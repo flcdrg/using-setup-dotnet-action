@@ -16,9 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: simple-build
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.0.x
+      # end-snippet: simple-build
 
       - run: dotnet build
         working-directory: simple/app
@@ -28,7 +30,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: globaljson-not-used-build
       - uses: actions/setup-dotnet@v6
+      # end-snippet: globaljson-not-used-build
 
       - run: dotnet build
         working-directory: globaljson/tests
@@ -41,9 +45,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: globaljson-build
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson/global.json
+      # end-snippet: globaljson-build
 
       - run: dotnet build
         working-directory: globaljson/tests
@@ -56,12 +62,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: globaljson-and-nugetconfig-build
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig/global.json
           source-url: https://nuget.pkg.github.com/flcdrg/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # end-snippet: globaljson-and-nugetconfig-build
 
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig/tests
@@ -74,11 +82,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: globaljson-and-nugetconfig-configfile-build
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig/global.json
           source-url: https://nuget.pkg.github.com/flcdrg/index.json
           config-file: globaljson-and-nugetconfig/nuget.config
+      # end-snippet: globaljson-and-nugetconfig-configfile-build
 
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -94,12 +104,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # begin-snippet: globaljson-and-nugetconfig-clear-build
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig-clear/global.json
           source-url: https://nuget.pkg.github.com/flcdrg/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # end-snippet: globaljson-and-nugetconfig-clear-build
 
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig-clear/tests
