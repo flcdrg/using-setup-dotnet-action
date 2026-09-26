@@ -6,9 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# begin-snippet: permissions
 permissions:
   contents: read
   packages: read
+# end-snippet: permissions
 
 jobs:
   simple:
