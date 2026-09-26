@@ -146,3 +146,25 @@ jobs:
 
       - run: dotnet test
         working-directory: globaljson-and-nugetconfig-clear/tests
+
+  globaljson-and-nugetconfig-configfile-clear:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+
+      # begin-snippet: globaljson-and-nugetconfig-configfile-clear-build
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: globaljson-and-nugetconfig-clear/global.json
+          source-url: https://nuget.pkg.github.com/flcdrg/index.json
+          config-file: globaljson-and-nugetconfig-clear/nuget.config
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # end-snippet: globaljson-and-nugetconfig-configfile-clear-build
+
+      - run: dotnet build
+        working-directory: globaljson-and-nugetconfig-clear/tests
+
+      - run: dotnet test
+        working-directory: globaljson-and-nugetconfig-clear/tests
