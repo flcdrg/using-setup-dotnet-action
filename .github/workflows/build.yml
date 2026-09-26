@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10.0.x
+
       - run: dotnet build
         working-directory: simple/app
 
@@ -29,6 +31,7 @@ jobs:
 
       - run: dotnet build
         working-directory: globaljson/tests
+
       - run: dotnet test
         working-directory: globaljson/tests
 
@@ -40,8 +43,10 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson/global.json
+
       - run: dotnet build
         working-directory: globaljson/tests
+
       - run: dotnet test
         working-directory: globaljson/tests
 
@@ -52,8 +57,8 @@ jobs:
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: globaljson-and-nugetconfig-clear/global.json
-          source-url: https://nuget.pkg.github.com/<owner>/index.json
+          global-json-file: globaljson-and-nugetconfig/global.json
+          source-url: https://nuget.pkg.github.com/flcdrg/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -70,9 +75,9 @@ jobs:
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: globaljson-and-nugetconfig-clear/global.json
-          source-url: https://nuget.pkg.github.com/<owner>/index.json
-          config-file: globaljson-and-nugetconfig-clear/nuget.config
+          global-json-file: globaljson-and-nugetconfig/global.json
+          source-url: https://nuget.pkg.github.com/flcdrg/index.json
+          config-file: globaljson-and-nugetconfig/nuget.config
 
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -91,7 +96,7 @@ jobs:
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig-clear/global.json
-          source-url: https://nuget.pkg.github.com/<owner>/index.json
+          source-url: https://nuget.pkg.github.com/flcdrg/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
