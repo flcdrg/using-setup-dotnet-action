@@ -1,0 +1,48 @@
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoSandbox;
+
+namespace Verify.MongoDB.Tests;
+
+public class IntegrationTests : IDisposable
+{
+    private IMongoRunner mongoRunner;
+
+    static IntegrationTests()
+    {
+        VerifyMongoDb.Enable();
+    }
+
+    public IntegrationTests()
+    {
+        mongoRunner = MongoRunner.Run();
+    }
+
+    public void Dispose()
+    {
+        mongoRunner?.Dispose();
+    }
+
+    [Fact]
+    public async Task FindAsync()
+    {
+        var clientSettings = MongoClientSettings.FromConnectionString(mongoRunner.ConnectionString);
+
+        clientSettings.EnableRecording();
+
+        var client = new MongoClient(clientSettings);
+
+        var database = client.GetDatabase("VerifyTests");
+
+        await database.DropCollectionAsync("docs", TestContext.Current.CancellationToken);
+
+        var collection = database.GetCollection<BsonDocument>("docs");
+
+        MongoDBRecording.StartRecording();
+
+        await collection.FindAsync(Builders<BsonDocument>.Filter.Eq("_id", "blah"),
+            new FindOptions<BsonDocument, BsonDocument>(), TestContext.Current.CancellationToken);
+
+        await Verifier.Verify("collection");
+    }
+}

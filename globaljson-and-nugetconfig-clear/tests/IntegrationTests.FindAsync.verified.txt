@@ -1,0 +1,34 @@
+﻿{
+  target: collection,
+  mongo: [
+    {
+      Database: VerifyTests,
+      Document: {
+        find: docs,
+        filter: {
+          _id: blah
+        },
+        $db: VerifyTests
+      },
+      Type: Started,
+      Command: find,
+      StartTime: DateTimeOffset_1
+    },
+    {
+      Document: {
+        cursor: {
+          id: {
+            $numberLong: 0
+          },
+          ns: VerifyTests.docs
+        },
+        ok: {
+          $numberDouble: 1.0
+        }
+      },
+      Type: Succeeded,
+      Command: find,
+      StartTime: DateTimeOffset_2
+    }
+  ]
+}

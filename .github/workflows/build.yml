@@ -20,6 +20,17 @@ jobs:
       - run: dotnet build
         working-directory: simple/app
 
+  globaljson-not-used:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+
+      - run: dotnet build
+        working-directory: globaljson/tests
+      - run: dotnet test
+        working-directory: globaljson/tests
+
   globaljson:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +39,8 @@ jobs:
         with:
           global-json-file: globaljson/global.json
       - run: dotnet build
+        working-directory: globaljson/tests
+      - run: dotnet test
         working-directory: globaljson/tests
 
   globaljson-and-nugetconfig:
@@ -39,13 +52,23 @@ jobs:
           global-json-file: globaljson-and-nugetconfig/global.json
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig/tests
+      - run: dotnet test
+        working-directory: globaljson-and-nugetconfig/tests
 
   globaljson-and-nugetconfig-clear:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig-clear/global.json
+          source-url: https://nuget.pkg.github.com/<owner>/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
       - run: dotnet build
+        working-directory: globaljson-and-nugetconfig-clear/tests
+
+      - run: dotnet test
         working-directory: globaljson-and-nugetconfig-clear/tests
