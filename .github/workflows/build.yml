@@ -96,7 +96,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       # end-snippet: globaljson-and-nugetconfig-build
 
-      - run: cat nuget.config
+      - run: cat ../nuget.config
 
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig/tests
