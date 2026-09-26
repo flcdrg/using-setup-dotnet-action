@@ -27,6 +27,7 @@ jobs:
 
   globaljson-not-used:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
 
@@ -42,6 +43,7 @@ jobs:
 
   globaljson:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
 
@@ -56,6 +58,26 @@ jobs:
 
       - run: dotnet test
         working-directory: globaljson/tests
+
+  source-url:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+
+      # begin-snippet: source-url
+      - uses: actions/setup-dotnet@v6
+        with:
+          source-url: https://nuget.pkg.github.com/flcdrg/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # end-snippet: source-url
+
+      - run: dotnet build
+        working-directory: globaljson-and-nugetconfig/tests
+
+      - run: dotnet test
+        working-directory: globaljson-and-nugetconfig/tests
 
   globaljson-and-nugetconfig:
     runs-on: ubuntu-latest
@@ -88,7 +110,7 @@ jobs:
           global-json-file: globaljson-and-nugetconfig/global.json
           source-url: https://nuget.pkg.github.com/flcdrg/index.json
           config-file: globaljson-and-nugetconfig/nuget.config
-      # end-snippet: globaljson-and-nugetconfig-configfile-build
+        # end-snippet: globaljson-and-nugetconfig-configfile-build
 
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -101,6 +123,7 @@ jobs:
 
   globaljson-and-nugetconfig-clear:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v7
 
