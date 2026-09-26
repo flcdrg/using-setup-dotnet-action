@@ -49,9 +49,14 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: globaljson-and-nugetconfig/global.json
+          global-json-file: globaljson-and-nugetconfig-clear/global.json
+          source-url: https://nuget.pkg.github.com/<owner>/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig/tests
+
       - run: dotnet test
         working-directory: globaljson-and-nugetconfig/tests
 
@@ -59,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      
+
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig-clear/global.json
