@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+
       - uses: actions/setup-dotnet@v6
 
       - run: dotnet build
@@ -35,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson/global.json
@@ -47,13 +49,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+
       - uses: actions/setup-dotnet@v6
         with:
           global-json-file: globaljson-and-nugetconfig-clear/global.json
           source-url: https://nuget.pkg.github.com/<owner>/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
+
+      - run: dotnet build
+        working-directory: globaljson-and-nugetconfig/tests
+
+      - run: dotnet test
+        working-directory: globaljson-and-nugetconfig/tests
+
+  globaljson-and-nugetconfig-configfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: globaljson-and-nugetconfig-clear/global.json
+          source-url: https://nuget.pkg.github.com/<owner>/index.json
+          config-file: globaljson-and-nugetconfig-clear/nuget.config
+
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
       - run: dotnet build
         working-directory: globaljson-and-nugetconfig/tests
 
